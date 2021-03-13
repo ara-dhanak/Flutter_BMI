@@ -10,30 +10,30 @@ class bmi extends StatefulWidget {
 
 class _bmiState extends State<bmi> {
   @override
-  Widget build(BuildContext context) {
+
     TextEditingController _ageController = new TextEditingController();
     TextEditingController _heightController = new TextEditingController();
     TextEditingController _weightController = new TextEditingController();
-     double Result = 0.0;
+     double _cal_result = 0.0;
     String _healthstatus = "";
-
+    //Data member decalaration
 
     void _bmi_cal() {
-      setState(() {
+
+      //Logic in a function
+
         print("BMI cal test");
         int age = int.parse(_ageController.text);
         double height = double.parse(_heightController.text);
         //  double inches = height * 12; //Converting feet to inches
         double meter = (height * 12) / 39.37; //Meter conversion
         double weight = double.parse(_weightController.text);
-        double Result = 0.0;
+      double Result = 0.0;
 
         if ((_ageController.text.isNotEmpty || age > 0) &&
             ((_heightController.text.isNotEmpty || meter > 0) &&
                 (_weightController.text.isNotEmpty || weight > 0))) {
           Result = weight / (meter * meter); //BMI value
-          print("BMI value: $Result");
-          print(Result);
 
           if (double.parse(Result.toStringAsFixed(1)) < 18.5) {
             _healthstatus = "Underweight";
@@ -54,8 +54,12 @@ class _bmiState extends State<bmi> {
           }
         }
         print("Your bmi result is: $Result");
+        setState(() {
+          _cal_result = Result;
       });
     }
+
+  Widget build(BuildContext context) {
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -125,12 +129,10 @@ class _bmiState extends State<bmi> {
               ]
               ),
             ),
-
-
                   new Container(
                     alignment: Alignment.center,
                     child: new Text(
-                      "BMI value: $Result",
+                      "BMI value: $_cal_result",
                       style: new TextStyle(
                         color: Colors.deepOrange,
                         fontStyle: FontStyle.normal,
@@ -150,7 +152,6 @@ class _bmiState extends State<bmi> {
                           fontSize: 13),
                     ),
                   )
-
           ],
         ),
       ),
